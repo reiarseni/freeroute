@@ -1,0 +1,19 @@
+.env
+__pycache__/
+*.pyc
+/ANALISIS
+/static/
+/frontend/node_modules/
+*.db
+/.venv
+.claude/settings.local.json
+/__pycache__
+.claude/settings.local.json
+
+# LiteLLM experimental clone (off-repo comparison only, never commit)
+/LITELLM-EXP
+/.claude
+/openspec
+
+# Internal planning notes (Antigravity CLI / dev scratch) — not for the public repo
+/plans

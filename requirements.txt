@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+httpx[http2]>=0.28
+aiosqlite
+pydantic
+tiktoken

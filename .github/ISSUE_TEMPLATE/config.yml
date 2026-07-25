@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question / discussion
+    url: https://github.com/reinaldolt/freeroute/discussions
+    about: For questions, ideas and general discussion, please use GitHub Discussions.

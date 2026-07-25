@@ -1,0 +1,25 @@
+[tool.ruff]
+# 120 matches Black's common config and covers the long SQL string literals in db.py
+# and the SSE event literals in translators.py without contorting them.
+line-length = 120
+target-version = "py311"
+extend-exclude = ["frontend", "static", "LITELLM-EXP", ".venv"]
+
+[tool.ruff.lint]
+# Core quality rules without the noisy/refactoring-opinion rules:
+#   E,W  pycodestyle (PEP 8)
+#   F    pyflakes (real bugs: undefined names, unused imports)
+#   I    isort (import order)
+# Rules deliberately NOT enabled — they fight resilient-proxy patterns:
+#   BLE   blind-except   → intentionally broad `except Exception` for upstream faults
+#   B023  function-uses-loop-variable → frequent false positives in async closures
+#   FURB  refactoring opinions (sorted()[0] → min, etc.)
+#   SIM   simplification opinions
+#   S110  try-except-pass → intentional swallow on best-effort cleanup
+#   PLW   pylint warnings (subprocess-run-without-check etc.)
+select = ["E", "W", "F", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+# SSE event literals in translators.py mirror the Anthropic wire format line-for-line;
+# splitting them hurts grepability against the protocol spec.
+"services/translators.py" = ["E501"]
