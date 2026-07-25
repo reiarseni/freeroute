@@ -15,10 +15,10 @@ jobs:
         python-version: ["3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -33,5 +33,8 @@ jobs:
         run: ruff check services/ routers/ db.py main.py
 
       - name: Unit tests
+        # `python -m pytest` (not the bare `pytest` binary) so the repo root lands on
+        # sys.path — otherwise `import db` / `import services.*` fail in CI, since
+        # there's no conftest.py or package marker to make pytest add it itself.
         # smoke_test.py needs a live server on :8787/:8788 — excluded from CI.
-        run: pytest tests/ -q --ignore=tests/smoke_test.py
+        run: python -m pytest tests/ -q --ignore=tests/smoke_test.py
