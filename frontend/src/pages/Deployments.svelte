@@ -436,7 +436,7 @@
     {:else if modelNames.length === 0 && !selected}
       <div class="text-center py-8 text-gray-600 text-sm">
         No hay deployments todavía.<br>
-        Creá un model_name y añadí deployments.
+        Crea un model_name y añade deployments.
       </div>
     {:else}
       <div class="space-y-1">
@@ -468,7 +468,7 @@
     {#if !selected}
       <div class="text-center py-16 text-gray-600">
         <div class="text-4xl mb-3">∞</div>
-        <p>Seleccioná o creá un model_name para ver sus deployments</p>
+        <p>Selecciona o crea un model_name para ver sus deployments</p>
       </div>
     {:else}
       <div class="flex items-center justify-between">
@@ -476,7 +476,7 @@
           <h2 class="text-lg font-semibold text-gray-100 font-mono">{selected}</h2>
           <p class="text-xs text-gray-500">
             {deployments.length} deployment{deployments.length !== 1 ? 's' : ''} ·
-            Arrastrá para reordenar · Guardá para persistir el orden
+            Arrastra para reordenar · Guarda para persistir el orden
           </p>
         </div>
         <div class="flex gap-2">
@@ -519,7 +519,7 @@
       {#if deployments.length === 0}
         <div class="text-center py-12 text-gray-600 text-sm border border-dashed border-gray-800 rounded-xl">
           Sin deployments en <span class="font-mono text-gray-400">{selected}</span>·
-          Añadí uno
+          Añade uno
         </div>
       {:else}
         <div use:initSortable class="space-y-2">
@@ -678,7 +678,7 @@
                 </ul>
                 {#if availableModels.length > 40 && filteredModels.length === 40}
                   <div class="px-3 py-1.5 text-xs text-gray-600 border-t border-gray-700 text-center">
-                    Mostrando 40 de {availableModels.length} · escribí para filtrar
+                    Mostrando 40 de {availableModels.length} · escribe para filtrar
                   </div>
                 {/if}
               </div>

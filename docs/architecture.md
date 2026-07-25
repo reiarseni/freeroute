@@ -51,8 +51,8 @@ sequenceDiagram
 
 1. **Proxy receives the request.** The OpenAI proxy is a thin pass-through: it reads
    `model` from the body, hands `(model_name, body, stream)` to the router, and streams
-   the chosen deployment's response back to the client (adding `X-Infinity-Provider` and
-   `X-Infinity-Model` headers for debugging).
+   the chosen deployment's response back to the client (adding `X-FreeRoute-Provider` and
+   `X-FreeRoute-Model` headers for debugging).
 
 2. **Router resolves the model name.** `model_group_alias` (a setting) may rewrite the
    incoming `model` to a canonical `model_name` before lookup — this is how Claude Code's
@@ -91,7 +91,7 @@ sequenceDiagram
   Configurable via `cooldown_times` in `router_settings`.
 - **Minute-bucket RPM/TPM.** Counts are kept per 1-minute window so they naturally expire
   without a background sweeper.
-- **Persisted.** Cooldown state is flushed to `~/.infinity-provisioner-cooldowns.json`
+- **Persisted.** Cooldown state is flushed to `~/.freeroute-cooldowns.json`
   via atomic rename, so a restart doesn't reset all deployments to "healthy" and hammer a
   provider that's still rate-limiting you.
 

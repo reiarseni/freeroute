@@ -235,7 +235,7 @@
     <div class="text-center py-16 text-gray-600">
       <div class="text-4xl mb-3">🔑</div>
       <p>No hay APIs configuradas todavía.</p>
-      <p class="text-sm mt-1">Agregá una para poder construir deployments.</p>
+      <p class="text-sm mt-1">Agrega una para poder construir deployments.</p>
     </div>
   {:else}
     <div class="space-y-2">
@@ -274,13 +274,13 @@
             <button
               onclick={() => openReauth(inst)}
               class="px-2 py-0.5 rounded text-xs font-medium bg-red-900/40 text-red-300 border border-red-800 hover:bg-red-900/60 transition-colors"
-              title="El token OAuth expiró o fue revocado — reautenticá esta cuenta"
+              title="El token OAuth expiró o fue revocado — reautentica esta cuenta"
             >⚠ Reautenticar</button>
           {:else if inst.oauth_status === 'needs_profile_arn'}
             <button
               onclick={() => openReauth(inst)}
               class="px-2 py-0.5 rounded text-xs font-medium bg-yellow-900/40 text-yellow-300 border border-yellow-800 hover:bg-yellow-900/60 transition-colors"
-              title="Falta profileArn — sin él esta cuenta no puede enrutar chat, reautenticá aportándolo"
+              title="Falta profileArn — sin él esta cuenta no puede enrutar chat, reautentica aportándolo"
             >⚠ Falta profileArn</button>
           {/if}
 
@@ -341,7 +341,7 @@
                   {/each}
                 </div>
                 {#if filteredPreviewModels.length > 200}
-                  <p class="text-xs text-gray-600 text-center mt-2">Mostrando 200 de {filteredPreviewModels.length} · escribí para filtrar</p>
+                  <p class="text-xs text-gray-600 text-center mt-2">Mostrando 200 de {filteredPreviewModels.length} · escribe para filtrar</p>
                 {/if}
               </div>
             {/if}
@@ -380,7 +380,7 @@
     </div>
   {:else if oauthFlow.status === 'pending'}
     <div class="space-y-2 text-sm">
-      <p class="text-gray-400">Abrí esta URL y autorizá con el código:</p>
+      <p class="text-gray-400">Abre esta URL y autoriza con el código:</p>
       <div class="flex items-center gap-2">
         <a href={oauthFlow.verificationUri} target="_blank" rel="noopener noreferrer" class="text-violet-400 underline truncate">{oauthFlow.verificationUri}</a>
         <button type="button" onclick={() => copyToClipboard(oauthFlow.verificationUri)} class="text-gray-500 hover:text-gray-300 text-xs shrink-0">⎘</button>
@@ -456,7 +456,7 @@
               {@render oauthPanel(form.provider, form.name, null)}
             {:else}
               <div class="text-xs text-gray-500 bg-gray-800/60 border border-gray-700 rounded-lg px-3 py-2">
-                Cuenta gestionada por OAuth — usá "Reautenticar" desde la lista si el token expiró.
+                Cuenta gestionada por OAuth — usa "Reautenticar" desde la lista si el token expiró.
               </div>
             {/if}
           {:else}

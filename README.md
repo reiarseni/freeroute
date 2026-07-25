@@ -1,18 +1,62 @@
 <div align="center">
+<img src="docs/screenshots/hero.svg" alt="FreeRoute — your AI coding tool never sees a rate limit again" width="100%">
 
-# ∞ FreeRoute
+A local proxy that sits in front of Claude Code, Cline, OpenCode, Aider and friends. When a
+provider throttles you, degrades, or dies mid-stream, FreeRoute silently swaps in the next
+deployment in your fallback chain — **same request, same session, zero interruption.**
 
-**Infinite free quota for your AI coding tools.**
+[![License](https://img.shields.io/badge/license-Apache--2.0-181321?style=flat-square&labelColor=0b0817)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11%2B-181321?style=flat-square&labelColor=0b0817)](https://www.python.org/)
+[![Tests](https://img.shields.io/badge/tests-191%20passing-181321?style=flat-square&labelColor=0b0817&color=7c3aed)](#tests)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-181321?style=flat-square&labelColor=0b0817)](CONTRIBUTING.md)
 
-A local proxy that intercepts requests from Claude Code, Cline, OpenCode, Aider and friends,
-rotates API keys and routes to free models with **automatic fallback across providers** —
-keeping the session alive through rate limits without you touching anything.
+</div>
 
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/tests-191%20passing-brightgreen.svg)](#tests)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+---
 
+## 60 seconds, start to finish
+
+Pick a deployment, ask it something, connect Claude Code — all from the UI, no config files
+hand-edited. This is an unedited recording against a real keyless provider (Kilo):
+
+<div align="center">
+<img src="docs/screenshots/demo.gif" alt="FreeRoute demo — selecting a deployment, live streaming chat with real provider/latency metadata, then copying the Claude Code config from Setup" width="820">
+</div>
+
+---
+
+## See it rescue a request
+
+This is a real, unedited transcript. `freeroute/demo` had two deployments configured: a
+deliberately broken one first, a working keyless one second. One `curl`, zero client-side
+retry logic:
+
+```bash
+$ curl -s http://localhost:8787/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -d '{"model":"freeroute/demo","messages":[{"role":"user","content":"Reply with exactly one word: pong"}]}'
+
+HTTP/1.1 200 OK
+x-freeroute-provider: kilo
+x-freeroute-model: nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+
+{"choices":[{"message":{"content":"pong", ...}}], ...}
+```
+
+What actually happened, from `/api/logs`:
+
+```
+deployment #1  kilo · not-a-real-model-xyz            → 401 AUTH_ERROR   (415ms)
+deployment #2  kilo · nvidia/nemotron-3-...:free       → 200 OK          (1017ms)
+```
+
+The client made **one** request and got **one** clean 200. FreeRoute ate the failure, put
+deployment #1 in cooldown so it won't be retried for a while, and moved on — the same thing
+happens with a real 429 from an exhausted free tier.
+
+<div align="center">
+<img src="docs/screenshots/providers.png" alt="FreeRoute Providers screen — 14 providers configured, editable from the UI" width="720">
+<br><sub>All of this — providers, keys, fallback order — lives in SQLite and is edited from the UI. No YAML, no restart.</sub>
 </div>
 
 ---
@@ -87,8 +131,8 @@ There are LLM routers out there (LiteLLM being the obvious one). FreeRoute is op
 for a specific use case: **giving individual developers a free, resilient backend for their
 AI coding tools**, not running a multi-tenant gateway.
 
-- **Keyless-first.** Ships with providers like Zen, Kilo and Z.AI that work with
-  `Bearer anonymous` — you can be productive before adding a single key.
+- **Keyless-first.** Ships with Zen and Kilo pre-configured with no auth required — you can
+  be productive before adding a single key.
 - **Built for coding tools.** Both OpenAI and Anthropic wire protocols out of the box, so
   Claude Code works without a separate shim. Tool-call translation is handled for providers
   that mangle `index` fields (Gemini, Kiro).
@@ -110,7 +154,7 @@ AI coding tools**, not running a multi-tenant gateway.
 | Gemini | API key | OpenAI-compatible endpoint |
 | Groq | API key | Very fast Llama inference |
 | Z.AI | API key | GLM models |
-| Zen | keyless | `Bearer anonymous`, no key needed |
+| Zen | keyless | OpenCode's free gateway, no auth header sent |
 | Kilo | keyless | `Bearer anonymous`, OpenRouter-compatible |
 | NVIDIA | API key | NIM endpoints |
 | Ollama | local | Local models at `localhost:11434` |
@@ -216,16 +260,16 @@ Env overrides (all optional, stable defaults):
 
 | Var | Default | Purpose |
 |---|---|---|
-| `INFINITY_HOST` | `0.0.0.0` | Bind host |
-| `INFINITY_PORT_OPENAI` | `8787` | OpenAI proxy + UI port |
-| `INFINITY_PORT_ANTHROPIC` | `8788` | Anthropic proxy port |
-| `INFINITY_DB_PATH` | `~/.infinity-provisioner-v4.db` | SQLite database path |
+| `FREEROUTE_HOST` | `0.0.0.0` | Bind host |
+| `FREEROUTE_PORT_OPENAI` | `8787` | OpenAI proxy + UI port |
+| `FREEROUTE_PORT_ANTHROPIC` | `8788` | Anthropic proxy port |
+| `FREEROUTE_DB_PATH` | `~/.freeroute.db` | SQLite database path |
 
 ## State on disk
 
 ```
-~/.infinity-provisioner-v4.db           SQLite (providers, deployments, keys, settings, logs)
-~/.infinity-provisioner-cooldowns.json  Persisted cooldown state (atomic rename)
+~/.freeroute.db                         SQLite (providers, deployments, keys, settings, logs)
+~/.freeroute-cooldowns.json  Persisted cooldown state (atomic rename)
 .env                                    Your own API keys (NOT committed; code doesn't read it)
 ```
 

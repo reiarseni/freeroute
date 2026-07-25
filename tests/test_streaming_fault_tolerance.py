@@ -51,7 +51,7 @@ def _make_streaming_resp(chunks: list[bytes], fail_after: int | None = None):
 @pytest_asyncio.fixture
 async def router_with_mock(tmp_path):
     """Router con DB y cooldowns en temp dir (mismo patrón que test_router_core.py)."""
-    global_cd = Path.home() / ".infinity-provisioner-cooldowns.json"
+    global_cd = Path.home() / ".freeroute-cooldowns.json"
     if global_cd.exists():
         global_cd.unlink()
     test_db = tmp_path / "test.db"

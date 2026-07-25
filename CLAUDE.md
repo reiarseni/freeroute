@@ -14,10 +14,10 @@ cliente OpenAI-compatible. Intercepta las peticiones, las enruta a modelos gratu
 fallback automático entre varios proveedores y varias API keys, y sobrevive a rate limits
 sin interrumpir la sesión.
 
-> Nota sobre naming: el nombre público del proyecto es **FreeRoute**. Internamente se conservan
-> algunos prefijos `infinity-*` por compatibilidad (env vars `INFINITY_*`, headers HTTP
-> `X-Infinity-*`, path de DB `~/.infinity-provisioner-v4.db`). No son branding, son API/estado
-> público; renombrarlos rompería instalaciones existentes.
+> Nota sobre naming: el nombre público y las env vars/headers/DB (`FREEROUTE_*`, `X-FreeRoute-*`,
+> `~/.freeroute.db`, `~/.freeroute-cooldowns.json`) usan **FreeRoute**. Al arrancar, si existe el
+> fichero legacy `~/.infinity-provisioner-cooldowns.json` se renombra automáticamente al nuevo
+> nombre (sin pérdida de datos).
 
 ## Arranque y verificación
 
@@ -29,7 +29,7 @@ sin interrumpir la sesión.
 .venv/bin/python3 main.py
 
 # Background persistente (NO usar `python3 main.py &` — muere con el shell)
-setsid .venv/bin/python3 main.py > /tmp/infinity.log 2>&1 &
+setsid .venv/bin/python3 main.py > /tmp/freeroute.log 2>&1 &
 
 # Salud
 curl -s http://localhost:8787/api/health | python3 -m json.tool
@@ -56,7 +56,7 @@ ruff check services/ routers/ db.py main.py
 
 ## Arquitectura
 
-El sistema es **data-driven desde SQLite** (`~/.infinity-provisioner-v4.db`). Nada de providers,
+El sistema es **data-driven desde SQLite** (`~/.freeroute.db`). Nada de providers,
 modelos ni cadenas de fallback está hardcodeado: todo vive en tablas y se edita por la REST API / SPA.
 
 ```
@@ -120,9 +120,9 @@ router settings por defecto. Las API keys (api_instances) NO se auto-cargan: se 
 
 ```
 .env                            # Keys sueltas del desarrollador (NO commitear); el código NO las lee
-~/.infinity-provisioner-v4.db   # SQLite async (providers, deployments, api_instances, settings, logs)
-~/.infinity-provisioner-cooldowns.json  # Estado de cooldown persistido (atomic rename)
-/tmp/infinity.log               # Log del servidor en modo background
+~/.freeroute.db                  # SQLite async (providers, deployments, api_instances, settings, logs)
+~/.freeroute-cooldowns.json  # Estado de cooldown persistido (atomic rename)
+/tmp/freeroute.log               # Log del servidor en modo background
 ```
 
 ## Git Safety

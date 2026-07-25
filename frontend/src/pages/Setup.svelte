@@ -31,7 +31,7 @@ cat > .claude/settings.local.json << 'EOF'
 {
   "env": {
     "ANTHROPIC_BASE_URL": "http://127.0.0.1:8788",
-    "ANTHROPIC_API_KEY": "infinity-proxy"
+    "ANTHROPIC_API_KEY": "freeroute"
   }
 }
 EOF
@@ -40,7 +40,7 @@ echo ".claude/settings.local.json" >> .gitignore`
   const claudeCodeJson = `{
   "env": {
     "ANTHROPIC_BASE_URL": "http://127.0.0.1:8788",
-    "ANTHROPIC_API_KEY": "infinity-proxy"
+    "ANTHROPIC_API_KEY": "freeroute"
   }
 }`
 
@@ -61,7 +61,7 @@ claude -p "di pong"`
       "name": "Infinity",
       "options": {
         "baseURL": "http://127.0.0.1:8787/v1",
-        "apiKey": "infinity-proxy"
+        "apiKey": "freeroute"
       },
       "models": {
         "infinity/sonnet": { "name": "Sonnet" },
@@ -94,7 +94,7 @@ claude -p "di pong"`
       },
       "options": {
         "baseURL": "http://127.0.0.1:8787/v1",
-        "apiKey": "infinity-proxy"
+        "apiKey": "freeroute"
       }
     }
   }
@@ -109,10 +109,10 @@ mimo -m infinity/sonnet "di pong"
   default: infinity/sonnet
   provider: custom
   base_url: http://127.0.0.1:8787/v1
-  api_key: infinity-proxy`
+  api_key: freeroute`
 
   const hermesVerify = `hermes chat --provider custom --model infinity/sonnet
-# di "pong" y verificá que aparece en la pestaña Logs
+# di "pong" y verifica que aparece en la pestaña Logs
 
 # Cambiar de modelo dentro de una sesión activa:
 # /model custom:infinity/haiku
@@ -140,7 +140,7 @@ mimo -m infinity/sonnet "di pong"
     <h1 class="text-xl font-semibold text-gray-100">Configuración de agentes</h1>
     <p class="text-sm text-gray-500 mt-1">
       El proxy debe estar corriendo antes de conectar cualquier agente.
-      Configurá los deployments en la pestaña <span class="text-violet-400 font-medium">Deployments</span> primero.
+      Configura los deployments en la pestaña <span class="text-violet-400 font-medium">Deployments</span> primero.
     </p>
   </div>
 
@@ -194,7 +194,7 @@ mimo -m infinity/sonnet "di pong"
           <div class="flex items-center gap-2">
             <span class="text-gray-600">3.</span>
             <code class="text-green-400">{'{proyecto}'}/.claude/settings.local.json</code>
-            <span class="ml-auto text-green-400/70">← vos, acá</span>
+            <span class="ml-auto text-green-400/70">← tú, aquí</span>
           </div>
         </div>
         <p class="text-xs text-gray-500 mt-2">
@@ -206,7 +206,7 @@ mimo -m infinity/sonnet "di pong"
       <!-- Paso 1 -->
       <div>
         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Paso 1 — Crear el archivo en la raíz del proyecto</p>
-        <p class="text-xs text-gray-500 mb-2">Ejecutá esto desde la raíz del proyecto donde querés usar el proxy:</p>
+        <p class="text-xs text-gray-500 mb-2">Ejecuta esto desde la raíz del proyecto donde quieres usar el proxy:</p>
         {@render codeblock('cc-bash', claudeCodeBash)}
         <p class="text-xs text-gray-600 mt-2">
           O crearlo a mano — contenido de <code class="text-gray-400">.claude/settings.local.json</code>:
@@ -274,10 +274,10 @@ mimo -m infinity/sonnet "di pong"
         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Pasos en VS Code</p>
         <ol class="space-y-3">
           {#each [
-            'Abrí el panel de RooCode desde la barra lateral o con <kbd class="bg-gray-800 px-1 rounded text-gray-300">Ctrl+Shift+R</kbd>',
+            'Abre el panel de RooCode desde la barra lateral o con <kbd class="bg-gray-800 px-1 rounded text-gray-300">Ctrl+Shift+R</kbd>',
             'Clic en el ícono de engranaje ⚙ (Settings) en la esquina superior derecha del panel',
-            'En la sección <strong>API Provider</strong>, seleccioná <strong>OpenAI Compatible</strong>',
-            'Completá los tres campos de la tabla de abajo y guardá',
+            'En la sección <strong>API Provider</strong>, selecciona <strong>OpenAI Compatible</strong>',
+            'Completa los tres campos de la tabla de abajo y guarda',
           ] as step, i}
             <li class="flex gap-3 text-sm">
               <span class="shrink-0 w-5 h-5 rounded-full bg-blue-900/50 text-blue-300 text-xs flex items-center justify-center font-bold border border-blue-800">{i + 1}</span>
@@ -302,7 +302,7 @@ mimo -m infinity/sonnet "di pong"
             <tbody class="divide-y divide-gray-800">
               {#each [
                 ['Base URL', 'http://127.0.0.1:8787/v1', 'roo-base'],
-                ['API Key',  'infinity-proxy',            'roo-key'],
+                ['API Key',  'freeroute',            'roo-key'],
                 ['Model',    'infinity/sonnet',           'roo-model'],
               ] as [field, value, id]}
                 <tr>
@@ -381,8 +381,8 @@ mimo -m infinity/sonnet "di pong"
           Editar <code class="normal-case font-mono text-gray-300">~/.config/opencode/opencode.json</code>
         </p>
         <p class="text-xs text-gray-500 mb-2">
-          Agregá el proveedor <code class="text-gray-400">infinity</code>. Si el archivo ya tiene contenido
-          (MCPs, keybinds), hacé <strong class="text-gray-300">merge</strong> — no reemplaces todo el archivo.
+          Agrega el proveedor <code class="text-gray-400">infinity</code>. Si el archivo ya tiene contenido
+          (MCPs, keybinds), haz <strong class="text-gray-300">merge</strong> — no reemplaces todo el archivo.
         </p>
         {@render codeblock('oc-json', openCodeJson)}
       </div>
@@ -391,8 +391,8 @@ mimo -m infinity/sonnet "di pong"
       <div class="bg-yellow-950/30 border border-yellow-800/50 rounded-xl px-4 py-3">
         <p class="text-xs text-yellow-300 font-medium mb-1">⚠ No reemplaces el archivo completo</p>
         <p class="text-xs text-yellow-200/60">
-          Solo agregá el bloque <code class="text-yellow-300">"infinity": {'{'}&hellip;{'}'}</code> dentro de la sección
-          <code class="text-yellow-300">"provider"</code> existente y cambiá <code class="text-yellow-300">"model"</code>
+          Solo agrega el bloque <code class="text-yellow-300">"infinity": {'{'}&hellip;{'}'}</code> dentro de la sección
+          <code class="text-yellow-300">"provider"</code> existente y cambia <code class="text-yellow-300">"model"</code>
           al valor deseado.
         </p>
       </div>
@@ -412,7 +412,7 @@ mimo -m infinity/sonnet "di pong"
             <tbody class="divide-y divide-gray-800">
               {#each [
                 ['base',           'http://127.0.0.1:8787/v1', 'oc-base'],
-                ['apiKey',         'infinity-proxy',            'oc-key'],
+                ['apiKey',         'freeroute',            'oc-key'],
                 ['model (default)','infinity/sonnet',           'oc-model'],
               ] as [field, value, id]}
                 <tr>
@@ -462,8 +462,8 @@ mimo -m infinity/sonnet "di pong"
           (o <code class="normal-case font-mono text-gray-300">.mimocode/mimocode.jsonc</code> en el proyecto)
         </p>
         <p class="text-xs text-gray-500 mb-2">
-          Agregá el proveedor <code class="text-gray-400">infinity</code>. Si el archivo ya tiene contenido,
-          hacé <strong class="text-gray-300">merge</strong> — no reemplaces todo el archivo.
+          Agrega el proveedor <code class="text-gray-400">infinity</code>. Si el archivo ya tiene contenido,
+          haz <strong class="text-gray-300">merge</strong> — no reemplaces todo el archivo.
         </p>
         {@render codeblock('mc-json', mimoCodeJson)}
       </div>
@@ -483,7 +483,7 @@ mimo -m infinity/sonnet "di pong"
             <tbody class="divide-y divide-gray-800">
               {#each [
                 ['baseURL',         'http://127.0.0.1:8787/v1', 'mc-base'],
-                ['apiKey',          'infinity-proxy',            'mc-key'],
+                ['apiKey',          'freeroute',            'mc-key'],
                 ['model (default)', 'infinity/sonnet',           'mc-model'],
               ] as [field, value, id]}
                 <tr>
@@ -553,7 +553,7 @@ mimo -m infinity/sonnet "di pong"
             <tbody class="divide-y divide-gray-800">
               {#each [
                 ['base_url',       'http://127.0.0.1:8787/v1', 'hm-base'],
-                ['api_key',        'infinity-proxy',            'hm-key'],
+                ['api_key',        'freeroute',            'hm-key'],
                 ['default (modelo)', 'infinity/sonnet',         'hm-model'],
               ] as [field, value, id]}
                 <tr>

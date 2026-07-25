@@ -25,7 +25,8 @@ from pathlib import Path
 
 from services.provider_handler import ErrorType
 
-COOLDOWNS_PATH = Path.home() / ".infinity-provisioner-cooldowns.json"
+COOLDOWNS_PATH = Path.home() / ".freeroute-cooldowns.json"
+_LEGACY_COOLDOWNS_PATH = Path.home() / ".infinity-provisioner-cooldowns.json"
 
 # ── ventanas de 60 segundos por bucket ────────────────────────────────────────
 _MINUTE = 60
@@ -277,7 +278,10 @@ class CooldownMechanism:
     def _restore(self) -> None:
         try:
             if not self._path.exists():
-                return
+                if self._path == COOLDOWNS_PATH and _LEGACY_COOLDOWNS_PATH.exists():
+                    os.replace(_LEGACY_COOLDOWNS_PATH, self._path)
+                else:
+                    return
             data = json.loads(self._path.read_text())
 
             # Restaurar cooldown_times

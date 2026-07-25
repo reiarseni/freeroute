@@ -55,9 +55,9 @@ async def chat_completions(request: Request):
     deployment_used = result.deployment_used or {}
     extra_headers = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
     if deployment_used.get("provider"):
-        extra_headers["X-Infinity-Provider"] = str(deployment_used["provider"])
+        extra_headers["X-FreeRoute-Provider"] = str(deployment_used["provider"])
     if deployment_used.get("model_id"):
-        extra_headers["X-Infinity-Model"] = str(deployment_used["model_id"])
+        extra_headers["X-FreeRoute-Model"] = str(deployment_used["model_id"])
 
     if is_stream:
         async def stream_gen():

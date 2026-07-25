@@ -1,6 +1,6 @@
 """
-FreeRoute (Infinity Provisioner v4)
-===================================
+FreeRoute
+=========
 Dos proxies en paralelo:
   - Puerto 8787: OpenAI-compatible proxy + REST API + SPA frontend
   - Puerto 8788: Anthropic-compatible proxy (para Claude Code)
@@ -132,9 +132,9 @@ anthropic_app.include_router(anthropic_proxy.router)
 # ── Entry point ──────────────────────────────────────────────────────────────
 
 # Puertos y host configurables por env; defaults estables.
-HOST = os.getenv("INFINITY_HOST", "0.0.0.0")
-PORT_OPENAI = int(os.getenv("INFINITY_PORT_OPENAI", "8787"))
-PORT_ANTHROPIC = int(os.getenv("INFINITY_PORT_ANTHROPIC", "8788"))
+HOST = os.getenv("FREEROUTE_HOST", "0.0.0.0")
+PORT_OPENAI = int(os.getenv("FREEROUTE_PORT_OPENAI", "8787"))
+PORT_ANTHROPIC = int(os.getenv("FREEROUTE_PORT_ANTHROPIC", "8788"))
 
 
 def run_openai():
@@ -164,7 +164,7 @@ def free_port(port: int) -> None:
 if __name__ == "__main__":
     free_port(PORT_OPENAI)
     free_port(PORT_ANTHROPIC)
-    print("FreeRoute (Infinity Provisioner v4) arrancando...")
+    print("FreeRoute arrancando...")
     print(f"  OpenAI proxy + UI: http://localhost:{PORT_OPENAI}")
     print(f"  Anthropic proxy:   http://localhost:{PORT_ANTHROPIC}")
 

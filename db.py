@@ -1,6 +1,6 @@
 """
 Base de datos SQLite — schema y helpers async.
-Archivo: ~/.infinity-provisioner-v4.db
+Archivo: ~/.freeroute.db
 """
 
 import json
@@ -9,8 +9,8 @@ from pathlib import Path
 
 import aiosqlite
 
-# Ruta de la DB configurable por env (INFINITY_DB_PATH); default estable.
-DB_PATH = Path(os.getenv("INFINITY_DB_PATH", str(Path.home() / ".infinity-provisioner-v4.db")))
+# Ruta de la DB configurable por env (FREEROUTE_DB_PATH); default estable.
+DB_PATH = Path(os.getenv("FREEROUTE_DB_PATH", str(Path.home() / ".freeroute.db")))
 
 SCHEMA = """
 -- Providers editables (data-driven). Reemplaza el hardcode de

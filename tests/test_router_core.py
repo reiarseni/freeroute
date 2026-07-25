@@ -34,7 +34,7 @@ async def router_with_mock(tmp_path):
     """Router con DB y cooldowns en temp dir."""
     # Limpiar cooldowns globales para aïsar tests
     from pathlib import Path
-    global_cd = Path.home() / ".infinity-provisioner-cooldowns.json"
+    global_cd = Path.home() / ".freeroute-cooldowns.json"
     if global_cd.exists():
         global_cd.unlink()
     test_db = tmp_path / "test.db"

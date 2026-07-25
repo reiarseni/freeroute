@@ -38,8 +38,8 @@
       throw new Error(message)
     }
 
-    const provider = res.headers.get('X-Infinity-Provider')
-    const modelId = res.headers.get('X-Infinity-Model')
+    const provider = res.headers.get('X-FreeRoute-Provider')
+    const modelId = res.headers.get('X-FreeRoute-Model')
 
     const reader = res.body.getReader()
     const decoder = new TextDecoder()

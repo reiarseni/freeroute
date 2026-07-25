@@ -7,7 +7,7 @@ from fastapi import APIRouter, HTTPException
 
 router = APIRouter(prefix="/api/chains")
 
-_MIGRATION_MSG = "Este endpoint está deprecado. Usá /api/deployments en su lugar."
+_MIGRATION_MSG = "Este endpoint está deprecado. Usa /api/deployments en su lugar."
 
 
 @router.get("/{chain_id}")
