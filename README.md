@@ -16,11 +16,16 @@ deployment in your fallback chain — **same request, same session, zero interru
 
 ## 60 seconds, start to finish
 
-Pick a deployment, ask it something, connect Claude Code — all from the UI, no config files
-hand-edited. This is an unedited recording against a real keyless provider (Kilo):
+Browse the three tiers Claude Code expects (`haiku` / `sonnet` / `opus`), send a real
+streaming chat message, then check the request log — this is an unedited recording
+against a live keyless provider (Kilo), no mocked data:
 
 <div align="center">
-<img src="docs/screenshots/demo.gif" alt="FreeRoute demo — selecting a deployment, live streaming chat with real provider/latency metadata, then copying the Claude Code config from Setup" width="820">
+<img src="docs/screenshots/demo.gif" alt="FreeRoute demo — browsing the haiku/sonnet/opus deployments, live streaming chat with real provider/latency metadata, then the request log showing the same freeroute/sonnet model served over both the :8787 OpenAI-compatible proxy and the :8788 Anthropic-compatible proxy" width="820">
+<br><sub><b>Look at the Logs table at the end</b> — the same <code>freeroute/sonnet</code> deployment answers both
+<code>:8787</code> (OpenAI-compatible <code>/v1/chat/completions</code>, used by the in-app Chat) and
+<code>:8788</code> (Anthropic-compatible <code>/v1/messages</code>, Claude Code's wire protocol) from a single
+router and a single set of deployments — no separate config, no separate keys.</sub>
 </div>
 
 ---

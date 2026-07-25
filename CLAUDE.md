@@ -129,3 +129,9 @@ router settings por defecto. Las API keys (api_instances) NO se auto-cargan: se 
 
 Antes de cualquier `git restore/clean/checkout` destructivo: **`git stash` siempre**, aunque creas
 que no hay cambios. Si hace falta crear una rama sin stashear primero, pregunta antes.
+
+## Commits
+
+**Nunca** añadas trailers `Co-Authored-By: Claude...` ni `Claude-Session: ...` a los mensajes de
+commit de este repo, aunque la plantilla por defecto del sistema los incluya. El usuario los ha
+pedido eliminar explícitamente más de una vez.
